@@ -17,3 +17,6 @@ header{position:absolute;z-index:10;inset:0 0 auto;display:flex;align-items:cent
 @media(max-width:480px){header{flex-wrap:wrap}.logo{font-size:20px}nav{margin-left:auto;gap:9px}.hero{height:75svh;min-height:440px}.stage{background-size:auto 100%}.planet h1{font-size:18px}.labels{display:none}.hotspots{inset:auto 2% 7%;height:52px;gap:4px}.hotspots button{border-radius:12px;background:#050b1dcc;border:1px solid #6bf;color:white;font-size:10px}.hotspots button:nth-child(1):before{content:'ARLIN'}.hotspots button:nth-child(2):before{content:'ASUNAAH'}.hotspots button:nth-child(3):before{content:'ERIK'}.hotspots button:nth-child(4):before{content:'ALERIK'}.scroll{display:none}}
 @media(max-height:650px) and (min-width:801px){.card img{height:42svh}.intro h2{font-size:32px}.portal-visual{--portal-size:130px}#world-portal-slot{min-height:145px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.portal-active:hover .portal-visual img{transform:none}}
+
+/* v1.5.2: adjust only ARLIN pedestal label; other three remain untouched. */
+.labels span:first-child{transform:translateY(-14px)}

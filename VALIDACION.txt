@@ -1,0 +1,5 @@
+GAREN VERSE 1.5 - REGISTRO DE VALIDACION
+Origen: archivos index.html, style.css y app.js de la rama main consultados en esta conversacion; modificaciones incrementales.
+Comprobado: sintaxis JavaScript mediante node --check; rutas relativas; cuatro WebP RGBA con transparencia alfa; imagenes JPEG originales conservadas; estructura y CRC del ZIP.
+Comprobacion visual: se ha inspeccionado una previsualizacion de los cuatro portales. La transparencia es una mascara circular aplicada a un JPG con cuadricula impresa, NO una extraccion perfecta de los objetos; pueden quedar restos o un halo en el borde.
+Pendiente: pruebas interactivas reales en Safari iPadOS, dispositivos moviles, teclado y navegador sin JavaScript. No se ha publicado ni modificado el repositorio remoto.

@@ -2,7 +2,7 @@
 // Destinos editables: dejar null hasta disponer de la URL real.
 const DESTINATIONS = Object.freeze({
   arlin: null,
-  asunaah: null,
+  asunaah: 'asunaah-portfolio.html',
   erik: 'https://erikgaren.com/',
   alerik: null
 });
@@ -34,9 +34,10 @@ cards.innerHTML = CHARACTERS.map((character,index) => `
 function portalMarkup(character) {
   const destination = DESTINATIONS[character.id];
   const image = `<span class="portal-visual"><img src="assets/portal-${character.id}.webp?v=151" alt="" width="200" height="200"></span>`;
-  const copy = `<span class="portal-copy"><strong>ENTER ${character.name}’S WORLD</strong><span>${destination ? new URL(destination).hostname + ' ↗' : 'DESTINO PENDIENTE'}</span></span>`;
+  const destinationLabel = destination ? (new URL(destination, window.location.href).hostname === window.location.hostname ? 'VIEW PORTFOLIO ↗' : new URL(destination, window.location.href).hostname + ' ↗') : 'DESTINO PENDIENTE';
+  const copy = `<span class="portal-copy"><strong>ENTER ${character.name}’S WORLD</strong><span>${destinationLabel}</span></span>`;
   if (!destination) return `<div class="portal-entry portal-pending" aria-label="Portal de ${character.name}. Destino pendiente de confirmar">${image}${copy}</div>`;
-  return `<a class="portal-entry portal-active" href="${destination}" aria-label="Entrar en el portfolio de ${character.name}: ${new URL(destination).hostname}">${image}${copy}</a>`;
+  return `<a class="portal-entry portal-active" href="${destination}" aria-label="Entrar en el portfolio de ${character.name}: ${destinationLabel}">${image}${copy}</a>`;
 }
 
 function showFlash(color, action, duration=350) {
@@ -149,3 +150,18 @@ function route() {
 window.addEventListener('popstate',route);
 window.addEventListener('hashchange',route);
 route();
+
+// Safari/iPadOS may restore a page from BFCache with the cinematic overlay still active.
+function resetNavigationEffects() {
+  window.clearTimeout(transitionTimer);
+  flash.classList.remove('on');
+  flash.style.removeProperty('background');
+  document.querySelectorAll('.portal-activating').forEach(el => el.classList.remove('portal-activating'));
+  hero.classList.remove('target','launch');
+  busy = false;
+}
+window.addEventListener('pageshow', () => {
+  resetNavigationEffects();
+  route();
+});
+window.addEventListener('pagehide', resetNavigationEffects);
