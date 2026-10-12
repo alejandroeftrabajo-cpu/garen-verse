@@ -27,3 +27,24 @@
 #flash.on{clip-path:circle(150% at var(--launch-x,50%) var(--launch-y,50%))}
 @media(max-width:800px){.orbit-focus{width:24vw}}
 @media(prefers-reduced-motion:reduce){.hero,.orbit-focus,#flash{transition:none!important}.hero.is-launching{background-size:cover;background-position:center}}
+
+/* GAREN VERSE 1.3 — planet and clean header; stage and avatars remain original */
+.hero{isolation:isolate;background:#030815;--planet-blue:#4aabff}
+/* A dark sky panel hides baked mockup navigation/title without touching characters. */
+.sky-clean{position:absolute;z-index:1;top:0;left:0;right:0;height:31%;pointer-events:none;background:linear-gradient(180deg,#020716 0%,#020716fa 38%,#031022ec 63%,#06152a00 100%)}
+.coded-planet{position:absolute;z-index:2;top:-12%;left:50%;width:clamp(255px,36vw,530px);aspect-ratio:1;transform:translateX(-50%);pointer-events:none;filter:drop-shadow(0 0 24px #188aff88);animation:planetAppear 1.2s both}
+.planet-surface{position:absolute;inset:15%;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 28% 20%,#a6dcff 0%,#3888d2 18%,#123e81 42%,#07142d 72%,#020816 95%);box-shadow:inset -22px -20px 45px #000c,inset 8px 9px 25px #b9eaff6b,0 0 25px #2c9cff,0 0 70px #188aff55}
+.planet-surface:before{content:'';position:absolute;inset:-35%;border-radius:50%;background:repeating-radial-gradient(ellipse at 40% 40%,transparent 0 17px,#c1eaff23 18px 23px,transparent 24px 40px),conic-gradient(from 25deg,transparent 0 30deg,#7fbaff45 55deg,transparent 78deg 155deg,#9ccaff3c 190deg,transparent 230deg 290deg,#7abaff36 325deg,transparent 350deg);animation:surfaceDrift 50s linear infinite}
+.planet-ring{position:absolute;left:-3%;right:-3%;top:39%;height:22%;border:2px solid #83caff;border-radius:50%;transform:rotate(-19deg);box-shadow:0 0 10px #56aaff,0 0 25px #228aff66;animation:ringPulse 6s ease-in-out infinite alternate}.ring-b{transform:rotate(17deg);opacity:.42;animation-delay:-3s}
+.coded-title{position:absolute;z-index:4;top:clamp(110px,12vw,175px);left:50%;transform:translateX(-50%);text-align:center;white-space:nowrap;text-shadow:0 3px 15px #01040c}.coded-title span{font-size:10px;letter-spacing:4px}.coded-title h1{font:700 clamp(26px,3.3vw,50px) 'Space Grotesk',sans-serif;letter-spacing:5px;margin:10px 0}.coded-title em{font-weight:300;font-style:normal}
+/* Mask the top corners of the original screenshot; new header stays above. */
+header{z-index:12;background:linear-gradient(#020716f5,#020716c9 75%,transparent)}
+.hotspots{z-index:5}.hotspots button{position:relative;--accent:#78caff}.hotspots button:nth-child(1){--accent:#ff91c0}.hotspots button:nth-child(2){--accent:#f4be66}.hotspots button:nth-child(3){--accent:#ff6676}.hotspots button:nth-child(4){--accent:#60d5ff}
+.hotspots button:after{content:'';position:absolute;bottom:4%;left:9%;right:9%;height:15%;border-radius:50%;border:3px solid var(--accent);box-shadow:0 0 12px var(--accent),inset 0 0 18px var(--accent);opacity:0;transform:scale(.82);transition:opacity .25s,transform .3s}
+.hotspots button:hover:after,.hotspots button:focus-visible:after,.hero.is-targeting .hotspots button:focus:after{opacity:1;transform:scale(1)}
+.hero.is-targeting{--orbit-color:#65baff}.hero.is-targeting .orbit-focus{border-color:var(--orbit-color);box-shadow:0 0 32px var(--orbit-color),inset 0 0 30px var(--orbit-color)}
+.hero.is-launching{background-size:145% auto}.hero.is-launching .coded-planet,.hero.is-launching .coded-title{opacity:0;transition:opacity .3s}
+@keyframes planetAppear{from{opacity:0;filter:blur(10px)}to{opacity:1;filter:blur(0)}}@keyframes surfaceDrift{to{transform:rotate(360deg)}}@keyframes ringPulse{to{opacity:.55;box-shadow:0 0 25px #8edaff,0 0 40px #228aff88}}
+@media(max-width:800px){.sky-clean{height:36%}.coded-planet{top:-7%;width:clamp(220px,43vw,390px)}.coded-title{top:clamp(96px,15vw,155px)}.coded-title h1{font-size:clamp(25px,3.5vw,38px)}}
+@media(max-width:480px){.sky-clean{height:42%}.coded-planet{top:-4%;width:250px}.coded-title{top:118px}.coded-title span{font-size:8px;letter-spacing:2px}.coded-title h1{font-size:24px;letter-spacing:3px}.hotspots button:after{bottom:2%;height:13%}}
+@media(prefers-reduced-motion:reduce){.coded-planet,.planet-surface:before,.planet-ring{animation:none!important}.hotspots button:after{transition:none!important}}
