@@ -33,7 +33,7 @@ cards.innerHTML = CHARACTERS.map((character,index) => `
 
 function portalMarkup(character) {
   const destination = DESTINATIONS[character.id];
-  const image = `<span class="portal-visual"><img src="assets/portal-${character.id}.webp" alt="" width="200" height="200"></span>`;
+  const image = `<span class="portal-visual"><img src="assets/portal-${character.id}.webp?v=151" alt="" width="200" height="200"></span>`;
   const copy = `<span class="portal-copy"><strong>ENTER ${character.name}’S WORLD</strong><span>${destination ? new URL(destination).hostname + ' ↗' : 'DESTINO PENDIENTE'}</span></span>`;
   if (!destination) return `<div class="portal-entry portal-pending" aria-label="Portal de ${character.name}. Destino pendiente de confirmar">${image}${copy}</div>`;
   return `<a class="portal-entry portal-active" href="${destination}" aria-label="Entrar en el portfolio de ${character.name}: ${new URL(destination).hostname}">${image}${copy}</a>`;
