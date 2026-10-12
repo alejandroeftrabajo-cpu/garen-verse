@@ -8,3 +8,22 @@
 :where(button,a):focus-visible{outline:3px solid #fff;outline-offset:4px}
 @keyframes cosmicPulse{to{opacity:.35;transform:scale(1.09)}}@keyframes driftStars{to{background-position:310px -290px}}
 @media(prefers-reduced-motion:reduce){.hero::before,.hero::after{animation:none!important}.card,.hotspots button{transition:none!important}}
+
+/* v1.2 orbital character focus: original stage artwork is never modified */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.hero{isolation:isolate;--orbit-color:#83d9ff;--focus-x:50%;--focus-y:60%;--zoom-x:50%;--zoom-y:55%;background-position:center;transition:background-size .7s ease,filter .7s ease}
+.hero .heading{display:none}
+.hotspots{z-index:3}
+.hotspots button{position:relative;-webkit-tap-highlight-color:transparent}
+.hotspots button:focus-visible{outline:2px solid white;outline-offset:-5px}
+.orbit-focus{position:absolute;z-index:2;left:var(--focus-x);top:var(--focus-y);width:min(23vw,320px);aspect-ratio:1;transform:translate(-50%,-50%) scale(.72) rotate(-25deg);border:2px solid var(--orbit-color);border-radius:50%;box-shadow:0 0 22px var(--orbit-color),inset 0 0 32px color-mix(in srgb,var(--orbit-color),transparent 75%);opacity:0;pointer-events:none;transition:opacity .28s,transform .55s ease,left .45s,top .45s}
+.orbit-focus:before,.orbit-focus:after{content:"";position:absolute;inset:12%;border:1px solid var(--orbit-color);border-radius:50%;transform:rotate(65deg) scaleY(.48)}
+.orbit-focus:after{inset:-9%;transform:rotate(-28deg) scaleY(.34);opacity:.8}
+.hero.is-targeting .orbit-focus{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0)}
+.hero.is-launching{background-size:auto 115%;background-position:var(--zoom-x) var(--zoom-y)}
+.hero.is-launching:before{background:radial-gradient(circle at var(--focus-x) var(--focus-y),color-mix(in srgb,var(--orbit-color),transparent 65%),transparent 40%)}
+.hero.is-launching .orbit-focus{opacity:1;transform:translate(-50%,-50%) scale(2.5) rotate(130deg)}
+#flash{background:#07101d;clip-path:circle(0 at var(--launch-x,50%) var(--launch-y,50%));transition:clip-path .55s ease,opacity .55s ease}
+#flash.on{clip-path:circle(150% at var(--launch-x,50%) var(--launch-y,50%))}
+@media(max-width:800px){.orbit-focus{width:24vw}}
+@media(prefers-reduced-motion:reduce){.hero,.orbit-focus,#flash{transition:none!important}.hero.is-launching{background-size:cover;background-position:center}}
