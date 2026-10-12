@@ -72,3 +72,34 @@ header{position:absolute;z-index:10;inset:0 0 auto;display:flex;align-items:cent
   }
   #about .heartbeat-primary::before,#about .heartbeat-secondary::before{opacity:0!important}
 }
+
+/* GAREN VERSE 1.6 — ORBITAL EXPLORE; scoped exclusively to the Explore section. */
+#explore{min-height:100svh;min-height:100dvh;overflow:hidden;padding:clamp(18px,2.5svh,34px) 3.5% 20px;justify-content:center}
+#explore .intro h2{font-size:clamp(26px,3vw,43px);margin-bottom:7px}
+#explore .intro>p:last-child{margin-bottom:9px}
+.orbit-shell{position:relative;max-width:1450px;width:100%;margin:0 auto;isolation:isolate;--orbit-accent:#ff91c0}
+.orbit-halo{position:absolute;pointer-events:none;left:50%;top:42%;width:min(72vw,750px);height:min(50vw,460px);transform:translate(-50%,-50%);background:radial-gradient(ellipse,color-mix(in srgb,var(--orbit-accent),transparent 80%),transparent 68%);filter:blur(28px);opacity:.75;transition:background .5s}
+#explore .orbit-cards{position:relative;display:block;width:100%;height:clamp(390px,61svh,610px);max-width:none;perspective:1300px;touch-action:pan-y;user-select:none;-webkit-user-select:none;overflow:visible}
+#explore .orbit-cards .card{position:absolute;left:50%;top:50%;width:clamp(190px,23vw,315px);height:min(100%,590px);max-height:100%;display:flex;transform:translate(-50%,-50%) translateX(var(--orbit-x,0px)) translateY(var(--orbit-y,0px)) scale(var(--orbit-scale,1)) rotateY(var(--orbit-angle,0deg));opacity:var(--orbit-opacity,1);z-index:var(--orbit-z,2);filter:brightness(var(--orbit-brightness,1));border-color:color-mix(in srgb,var(--accent),transparent 50%);box-shadow:0 12px 32px #0008;transition:transform .62s cubic-bezier(.2,.75,.2,1),opacity .5s,filter .5s,border-color .3s,box-shadow .3s;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;cursor:pointer}
+#explore .orbit-cards .card[data-orbit-position="0"]{border-color:var(--accent);box-shadow:0 0 30px color-mix(in srgb,var(--accent),transparent 66%),0 25px 50px #000b}
+#explore .orbit-cards .card:hover{border-color:var(--accent)}
+#explore .orbit-cards .card:focus-visible{outline:3px solid #d5f5ff;outline-offset:5px}
+#explore .orbit-cards .card img{height:0;min-height:0;flex:1 1 auto;object-fit:contain;object-position:center;background:#050508;pointer-events:none}
+#explore .orbit-cards .card-text{flex:0 0 auto;gap:6px;padding:10px 13px 12px;background:#101522;pointer-events:none}
+#explore .orbit-cards .card-name{font-size:clamp(17px,1.7vw,23px)}
+#explore .orbit-cards .card-tag{font-size:9px}
+.orbit-controls{display:flex;justify-content:center;align-items:center;gap:22px;margin-top:4px;position:relative;z-index:6}
+.orbit-arrow{height:43px;width:54px;border:1px solid #ffffff77;background:#101a32;color:white;border-radius:24px;font-size:24px;transition:background .2s,border-color .2s}
+.orbit-arrow:hover,.orbit-arrow:focus-visible{background:#24365b;border-color:#b9dcff}
+.orbit-status{min-width:175px;text-align:center;font-size:11px;letter-spacing:2px;color:#d3e4ff}
+.orbit-hint{margin:10px 0 5px;font-size:9px;letter-spacing:1.7px;color:#9baecb}
+.orbit-layout{position:relative;z-index:6;padding:8px 12px;border:1px solid #ffffff45;background:#101522;color:#cbd8ef;font-size:10px;letter-spacing:1.2px}
+/* Accessible grid fallback, also available on demand. */
+#explore .orbit-shell.is-grid .orbit-halo{display:none}
+#explore .orbit-shell.is-grid .orbit-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;height:auto;min-height:0;perspective:none;touch-action:auto}
+#explore .orbit-shell.is-grid .orbit-cards .card{position:relative;left:auto;top:auto;width:100%;height:min(59svh,570px);transform:none!important;opacity:1!important;filter:none!important;z-index:auto!important}
+#explore .orbit-shell.is-grid .orbit-controls,#explore .orbit-shell.is-grid .orbit-hint{display:none}
+@media(max-width:800px){#explore .orbit-cards .card{width:clamp(190px,37vw,280px)}#explore .orbit-shell.is-grid .orbit-cards{grid-template-columns:repeat(2,minmax(0,1fr))}#explore .orbit-shell.is-grid .orbit-cards .card{height:380px}}
+@media(max-width:600px){#explore{min-height:100svh;padding:40px 3% 25px}#explore .intro h2{font-size:clamp(25px,7vw,36px)}#explore .orbit-cards{height:clamp(350px,55svh,520px)}#explore .orbit-cards .card{width:clamp(190px,62vw,275px)}.orbit-hint{font-size:8px}#explore .orbit-shell.is-grid .orbit-cards{gap:8px}#explore .orbit-shell.is-grid .orbit-cards .card{height:310px}}
+@media(max-height:650px) and (min-width:801px){#explore .orbit-cards{height:clamp(290px,55svh,410px)}#explore .intro h2{font-size:30px}#explore .intro>p:last-child{margin-bottom:4px}.orbit-hint{margin:4px 0}}
+@media(prefers-reduced-motion:reduce){#explore .orbit-cards .card{transition:none!important}.orbit-halo{transition:none!important}}

@@ -33,7 +33,7 @@ cards.innerHTML = CHARACTERS.map((character,index) => `
 
 function portalMarkup(character) {
   const destination = DESTINATIONS[character.id];
-  const image = `<span class="portal-visual"><img src="assets/portal-${character.id}.webp?v=151" alt="" width="200" height="200"></span>`;
+  const image = `<span class="portal-visual"><img src="assets/portal-${character.id}.webp?v=160" alt="" width="200" height="200"></span>`;
   const destinationLabel = destination ? (new URL(destination, window.location.href).hostname === window.location.hostname ? 'VIEW PORTFOLIO ↗' : new URL(destination, window.location.href).hostname + ' ↗') : 'DESTINO PENDIENTE';
   const copy = `<span class="portal-copy"><strong>ENTER ${character.name}’S WORLD</strong><span>${destinationLabel}</span></span>`;
   if (!destination) return `<div class="portal-entry portal-pending" aria-label="Portal de ${character.name}. Destino pendiente de confirmar">${image}${copy}</div>`;
@@ -111,6 +111,7 @@ document.addEventListener('click',event => {
   const selector = event.target.closest('[data-world]');
   if (selector) {
     if (selector.closest('.hotspots')) selectFromStage(selector.dataset.world);
+    else if (selector.closest('.orbit-cards') && !orbitChoose(selector.dataset.world)) return;
     else openWorld(selector.dataset.world);
     return;
   }
@@ -165,3 +166,91 @@ window.addEventListener('pageshow', () => {
   route();
 });
 window.addEventListener('pagehide', resetNavigationEffects);
+
+
+// GAREN VERSE 1.6 — Orbital selector. The existing openWorld and flash transitions are reused.
+const orbitShell = document.querySelector('#orbit-shell');
+const orbitCards = document.querySelector('#cards');
+const orbitItems = [...orbitCards.querySelectorAll('.card')];
+const orbitStatus = document.querySelector('#orbit-status');
+let orbitIndex = 0;
+let orbitGrid = false;
+let orbitGesture = null;
+let orbitSuppressClickUntil = 0;
+const orbitIds = CHARACTERS.map(c => c.id);
+function orbitRender() {
+  if (orbitGrid) return;
+  const spread = Math.min(orbitCards.clientWidth * .265, 345);
+  orbitItems.forEach((el, index) => {
+    let offset = (index - orbitIndex + orbitItems.length) % orbitItems.length;
+    if (offset === 3) offset = -1;
+    // One character is in front, two on the sides, one behind the constellation.
+    const center = offset === 0;
+    const rear = offset === 2;
+    const x = offset === -1 ? -spread : offset === 1 ? spread : rear ? spread * 1.64 : 0;
+    const y = rear ? -22 : center ? 0 : 14;
+    el.style.setProperty('--orbit-x', `${x}px`);
+    el.style.setProperty('--orbit-y', `${y}px`);
+    el.style.setProperty('--orbit-scale', center ? '1' : rear ? '.62' : '.79');
+    el.style.setProperty('--orbit-angle', center ? '0deg' : offset === -1 ? '24deg' : offset === 1 ? '-24deg' : '0deg');
+    el.style.setProperty('--orbit-opacity', center ? '1' : rear ? '.46' : '.83');
+    el.style.setProperty('--orbit-brightness', center ? '1' : rear ? '.46' : '.7');
+    el.style.setProperty('--orbit-z', center ? '4' : rear ? '1' : '2');
+    el.dataset.orbitPosition = String(offset);
+    el.setAttribute('aria-label', `${CHARACTERS[index].name}${center ? ', seleccionado. Entrar en su universo' : ', seleccionar personaje'}`);
+    el.setAttribute('aria-pressed', String(center));
+  });
+  const active = CHARACTERS[orbitIndex];
+  orbitShell.style.setProperty('--orbit-accent', active.color);
+  orbitStatus.textContent = `${String(orbitIndex+1).padStart(2,'0')} / 04 · ${active.name}`;
+}
+function orbitMove(delta) {
+  if (orbitGrid || busy || !world.hidden) return;
+  orbitIndex = (orbitIndex + delta + orbitItems.length) % orbitItems.length;
+  orbitRender();
+}
+function orbitChoose(id) {
+  if (orbitGrid) return true;
+  if (performance.now() < orbitSuppressClickUntil) return false;
+  const index = orbitIds.indexOf(id);
+  if (index < 0) return false;
+  if (index !== orbitIndex) {
+    orbitIndex = index;
+    orbitRender();
+    return false; // Side characters only rotate into focus. A second tap enters.
+  }
+  return true; // Preserve the existing card -> flash -> internal page transition.
+}
+document.querySelector('#orbit-prev').addEventListener('click', () => orbitMove(-1));
+document.querySelector('#orbit-next').addEventListener('click', () => orbitMove(1));
+document.querySelector('#orbit-layout').addEventListener('click', event => {
+  orbitGrid = !orbitGrid;
+  orbitShell.classList.toggle('is-grid', orbitGrid);
+  event.currentTarget.setAttribute('aria-pressed', String(orbitGrid));
+  event.currentTarget.textContent = orbitGrid ? 'VOLVER A LA ÓRBITA' : 'VER LAS CUATRO TARJETAS';
+  if (!orbitGrid) orbitRender();
+});
+orbitCards.addEventListener('pointerdown', event => {
+  if (orbitGrid || event.button !== 0) return;
+  orbitGesture = {x:event.clientX,y:event.clientY,id:event.pointerId};
+});
+orbitCards.addEventListener('pointerup', event => {
+  if (!orbitGesture || orbitGesture.id !== event.pointerId || orbitGrid) return;
+  const dx = event.clientX - orbitGesture.x;
+  const dy = event.clientY - orbitGesture.y;
+  orbitGesture = null;
+  if (Math.abs(dx) > 42 && Math.abs(dx) > Math.abs(dy)*1.2) {
+    orbitSuppressClickUntil = performance.now() + 420;
+    orbitMove(dx < 0 ? 1 : -1);
+  }
+});
+orbitCards.addEventListener('pointercancel', () => {orbitGesture=null;});
+orbitCards.addEventListener('dragstart', event => event.preventDefault());
+orbitShell.addEventListener('keydown', event => {
+  if (orbitGrid || !world.hidden || !['ArrowLeft','ArrowRight'].includes(event.key)) return;
+  event.preventDefault();
+  orbitMove(event.key === 'ArrowRight' ? 1 : -1);
+  orbitItems[orbitIndex].focus({preventScroll:true});
+});
+window.addEventListener('resize', orbitRender, {passive:true});
+orbitRender();
