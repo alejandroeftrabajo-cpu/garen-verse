@@ -21,12 +21,12 @@ header{position:absolute;z-index:10;inset:0 0 auto;display:flex;align-items:cent
 /* v1.5.2: adjust only ARLIN pedestal label; other three remain untouched. */
 .labels span:first-child{transform:translateY(-14px)}
 
-/* GAREN VERSE 1.5.3 — Latido tipografico exclusivo de ABOUT */
+/* GAREN VERSE 1.5.4 — Doble latido con halo dorado cálido. */
 #about .about-heartbeat .heartbeat-primary,
 #about .about-heartbeat .heartbeat-secondary {
   display: inline-block;
   transform-origin: center center;
-  will-change: transform;
+  /* La sombra no altera el flujo ni desplaza el texto contiguo. */
 }
 #about .heartbeat-primary {
   animation: garen-heartbeat-primary 3.4s ease-in-out infinite;
@@ -35,20 +35,20 @@ header{position:absolute;z-index:10;inset:0 0 auto;display:flex;align-items:cent
   animation: garen-heartbeat-secondary 3.4s ease-in-out infinite;
 }
 @keyframes garen-heartbeat-primary {
-  0%, 14%, 32%, 100% { transform: scale(1); text-shadow: none; }
-  19% { transform: scale(1.02); text-shadow: 0 0 17px rgba(255,255,255,.28); }
-  25% { transform: scale(1.007); text-shadow: 0 0 7px rgba(255,255,255,.13); }
+  0%, 14%, 32%, 100% {transform:scale(1);filter:drop-shadow(0 0 0 transparent);text-shadow:none;}
+  19% {transform:scale(1.026);filter:drop-shadow(0 0 16px rgba(255,205,95,.85)) drop-shadow(0 0 31px rgba(255,190,65,.54));text-shadow:0 0 8px rgba(255,244,192,.95),0 0 22px rgba(255,215,115,.92),0 0 45px rgba(255,180,65,.65);}
+  25% {transform:scale(1.008);filter:drop-shadow(0 0 8px rgba(255,205,95,.28));text-shadow:0 0 13px rgba(255,220,145,.35);}
 }
 @keyframes garen-heartbeat-secondary {
-  0%, 25%, 48%, 100% { transform: scale(1); text-shadow: none; }
-  32% { transform: scale(1.023); text-shadow: 0 0 22px rgba(138,178,255,.48); }
-  39% { transform: scale(1.008); text-shadow: 0 0 10px rgba(138,178,255,.18); }
+  0%, 25%, 48%, 100% {transform:scale(1);filter:drop-shadow(0 0 0 transparent);text-shadow:none;}
+  32% {transform:scale(1.025);filter:drop-shadow(0 0 19px rgba(255,207,106,.8)) drop-shadow(0 0 36px rgba(255,190,75,.5));text-shadow:0 0 9px rgba(255,241,179,.94),0 0 25px rgba(255,207,100,.85),0 0 52px rgba(255,181,60,.6);}
+  39% {transform:scale(1.008);filter:drop-shadow(0 0 10px rgba(255,205,95,.25));text-shadow:0 0 14px rgba(255,213,130,.32);}
 }
 @media (prefers-reduced-motion: reduce) {
   #about .heartbeat-primary, #about .heartbeat-secondary {
-    animation: none !important;
-    transform: none !important;
-    text-shadow: none !important;
-    will-change: auto;
+    animation:none !important;
+    transform:none !important;
+    filter:none !important;
+    text-shadow:none !important;
   }
 }
