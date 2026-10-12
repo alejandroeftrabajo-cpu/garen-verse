@@ -48,3 +48,18 @@ header{z-index:12;background:linear-gradient(#020716f5,#020716c9 75%,transparent
 @media(max-width:800px){.sky-clean{height:36%}.coded-planet{top:-7%;width:clamp(220px,43vw,390px)}.coded-title{top:clamp(96px,15vw,155px)}.coded-title h1{font-size:clamp(25px,3.5vw,38px)}}
 @media(max-width:480px){.sky-clean{height:42%}.coded-planet{top:-4%;width:250px}.coded-title{top:118px}.coded-title span{font-size:8px;letter-spacing:2px}.coded-title h1{font-size:24px;letter-spacing:3px}.hotspots button:after{bottom:2%;height:13%}}
 @media(prefers-reduced-motion:reduce){.coded-planet,.planet-surface:before,.planet-ring{animation:none!important}.hotspots button:after{transition:none!important}}
+
+/* v1.4 — real clean image asset, not a screenshot of a UI */
+.hero{background-image:linear-gradient(180deg,rgba(0,4,15,.34),transparent 35%,rgba(0,4,15,.16)),url('assets/stage.jpg');background-position:center center;background-size:cover}
+.sky-clean{display:none!important}
+.coded-planet{top:-18%;width:clamp(240px,33vw,470px);opacity:.92}
+.coded-title{top:clamp(112px,13vw,180px);z-index:6}
+.coded-title h1{font-size:clamp(27px,3.3vw,48px)}
+header{background:linear-gradient(#020716b8,transparent);z-index:12}
+.platform-labels{position:absolute;z-index:6;left:2%;right:2%;bottom:19%;display:grid;grid-template-columns:repeat(4,1fr);pointer-events:none;text-align:center;gap:1vw}
+.platform-labels span{font:700 clamp(12px,1.7vw,25px) 'Space Grotesk',sans-serif;letter-spacing:.13em;text-shadow:0 2px 9px #000,0 0 18px #000;padding:6px 0}
+.platform-labels span:nth-child(1){color:#ffb0d4}.platform-labels span:nth-child(2){color:#ffd17c}.platform-labels span:nth-child(3){color:#ff8896}.platform-labels span:nth-child(4){color:#8ce5ff}
+.hotspots{inset:27% 2% 12%}
+.hero.is-launching{background-size:115% auto}
+@media(max-width:800px){.hero{background-size:cover}.coded-planet{top:-10%;width:clamp(230px,40vw,350px)}.coded-title{top:clamp(105px,15vw,155px)}.platform-labels{bottom:20%}}
+@media(max-width:480px){.hero{background-size:auto 100%;background-position:center}.coded-planet{top:-5%;width:240px}.coded-title{top:125px}.platform-labels{bottom:15%;left:0;right:0}.platform-labels span{font-size:9px;letter-spacing:0}}
